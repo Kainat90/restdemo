@@ -1,5 +1,6 @@
 package com.thinkalike.restdemo.service.impl.impl;
 
+import com.thinkalike.restdemo.exception.CloudVendorNotFoundException;
 import com.thinkalike.restdemo.model.CloudVendor;
 import com.thinkalike.restdemo.repository.CloudVendorRepository;
 import com.thinkalike.restdemo.service.CloudVendorService;
@@ -43,8 +44,10 @@ public class CloudVendorServiceimpl implements CloudVendorService {
     public CloudVendor getCloudVendor(String cloudVendorId) {
 
         //more business logic
+if(cloudVendorRepository.findById(cloudVendorId).isEmpty())
+    throw new CloudVendorNotFoundException("Requested Cloud Vendor does not exist");
 
-        return
+return
                 cloudVendorRepository.findById(cloudVendorId).get();
     }
 
