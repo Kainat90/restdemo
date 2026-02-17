@@ -1,7 +1,10 @@
 package com.thinkalike.restdemo.controller;
 
+import com.thinkalike.restdemo.Response.ResponseHandler;
 import com.thinkalike.restdemo.model.CloudVendor;
 import com.thinkalike.restdemo.service.CloudVendorService;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -20,10 +23,10 @@ public class CloudVendorController {
 //Read Specific Vendor Details
     @GetMapping("/{vendorId}") //get mapping annotation used to call get method
 
-    public CloudVendor getCloudVendorDetails(@PathVariable("vendorId") String vendorId){
+    public ResponseEntity<Object> getCloudVendorDetails(@PathVariable("vendorId") String vendorId){
 
+        return  ResponseHandler.responseBuilder("Requested Vendor Details are give:", HttpStatus.OK,cloudVendorService.getCloudVendor(vendorId));
 
-        return cloudVendorService.getCloudVendor(vendorId);
 
     }
 //Read All Vendor Details
@@ -52,6 +55,8 @@ public String updateCloudVendorDetails(@RequestBody CloudVendor cloudVendor){
 
     public String deleteCloudVendorDetails(@PathVariable("vendorId") String vendorId){
         cloudVendorService.deleteCloudVendor(vendorId);
+
+
         return "Cloud Vendor Deleted Successfully";
     }
 }
